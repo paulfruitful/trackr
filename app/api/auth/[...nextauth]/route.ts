@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+/*import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google"
 import {doc,setDoc} from "firebase/firestore"
 import { db } from "@/firebase";
@@ -30,4 +30,4 @@ const authOption:NextAuthConfig={
 
 const handler=NextAuth(authOption)
 
-export {handler as GET, handler as POST}
+export {handler as GET, handler as POST}*/
