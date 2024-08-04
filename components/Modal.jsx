@@ -1,6 +1,7 @@
 import React,{forwardRef,useState} from 'react'
 
-const Modal = forwardRef(({inventory,setInventory},ref) => {
+const Modal = forwardRef(
+    ({inventory,setInventory,count},ref) => {
     const [name,setName]=useState('')
     const [qty,setQty]=useState(0)
     const closeModal=()=>{
@@ -9,7 +10,6 @@ const Modal = forwardRef(({inventory,setInventory},ref) => {
       }
       console.log('You touched')
       }
-console.log(inventory)
       const createPantry=()=>{
         const p={
         id:inventory.length,
@@ -17,7 +17,9 @@ console.log(inventory)
         quantity:parseInt(qty),
         image:''    
         }
+        const newLength=inventory.length+1
         setInventory([...inventory,p])
+        count(newLength)
         closeModal()
       }
     
