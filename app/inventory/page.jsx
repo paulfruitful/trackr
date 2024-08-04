@@ -52,7 +52,7 @@ function Page() {
           return <Inventory name={obj.name} quantity={obj.quantity} image={obj.image}/>
         })}
       </div>
-      <Modal ref={modalRef} />
+      <Modal inventory={inventory} setInventory={setInventory}  ref={modalRef} />
     </div>
   )
 }

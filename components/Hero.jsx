@@ -4,7 +4,7 @@ const Hero = ({open,count}) => {
 
         <span className="text-lg border-b-2 lg:p-0 pl-2  border-solid  ">Pantry🥗<span className=" bg-white ml-1  text-black rounded-full py-1 px-2 text-md">{count}</span></span>
 
-        <button onClick={()=>{open()}} className=" p-3 bg-green-600  text-white rounded-[10px] shadow-sm">+ Add Pantry</button>
+        <button onClick={()=>{open()}} className=" p-3 bg-green-600 active:bg-green-700 text-white rounded-[10px] shadow-sm">+ Add Pantry</button>
      
     </div>
   )
