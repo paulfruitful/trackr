@@ -1,6 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faCamera } from "@fortawesome/free-solid-svg-icons"
 const Hero = ({open,count}) => {
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const response = await fetch('/api/addimage', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      console.log(result); 
+    }
+  };
   return (
     <div className="flex justify-between px-3 my-[4pc] lg:px-8 w-full ">
 
@@ -13,8 +28,7 @@ const Hero = ({open,count}) => {
     accept="image/*"
     capture="environment"
     id="camera-input"
-    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-  />
+    class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" onChange={handleFileChange} />
   <label htmlFor="camera-input" class="flex items-center justify-center w-[50px] h-[50px]   border border-gray-300 rounded-full cursor-pointer">
     <FontAwesomeIcon icon={faCamera} class="fas fa-camera text-white w-[30px] h-[30px]  text-2xl"/>
   </label>

@@ -1,7 +1,7 @@
 import '../globals.css'
 
 export const metadata = {
-  title: 'Tracr',
+  title: 'Trackr',
   description: 'Pantry Inventory Management Made Easy ⛈',
 }
 
