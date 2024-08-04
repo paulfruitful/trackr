@@ -58,9 +58,11 @@ const [count,setCount]=useState(inventory.length)
       <Nav />
       <div className="p-6 flex flex-col items-center w-full">
   <div className="relative flex border-2 border-gray-400  px-4 py-[4px] pl-10">
-    <input type="search" name="search" placeholder="Search" className="outline-none self-start p-[3px] bg-transparent text-white text-lg" onChange={(e)=>search(e)} />
+    <input type="search" name="search" placeholder="cabbages..." className="outline-none self-start p-[3px] bg-transparent text-white text-lg" onChange={(e)=>search(e)} />
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-[30px] justify-self-center p-[3px] mt-[2px] h-[30px]  text-gray-400">
       <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+      <input type="submit" value="" />
+    
     </svg>   
 
   </div>
