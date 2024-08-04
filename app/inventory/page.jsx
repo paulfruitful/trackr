@@ -1,9 +1,9 @@
 "use client"
-import Nav from '@components/nav';
-import '@/fontawesome';
-import Hero from '@components/Hero';
-import Inventory from '@components/Inventory';
-import Modal from '@components/Modal';
+import Nav from '../../components/nav';
+import '../../fontawesome';
+import Hero from ' ../../components/Hero';
+import Inventory from '../../components/Inventory';
+import Modal from '../../components/Modal';
 import { useState, useRef } from 'react';
 
 function Page() {
