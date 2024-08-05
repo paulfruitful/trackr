@@ -4,15 +4,15 @@ import { useRouter } from 'next/navigation';
 import {v4} from "uuid"
 import { db } from '../../firebase';
 import{doc,setDoc} from "firebase/firestore"
-import {setCookie,getCookie} from "cookies-next"
-import {publicEncrypt } from 'crypto';
 import crypto from 'crypto'
+
+
 export default function Example() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message,setMessage]=useState('')
-  const router=useRouter()
+  const Router=useRouter()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,12 +24,23 @@ export default function Example() {
       password:crypto.createHash('sha256').update(password).digest('hex'),
       createdAt: new Date().toISOString(),
     });
-    console.log(process.env.NEXT_PUBLIC_RSA_KEY)
+    
+    const req=await fetch('api/reg',{
+      method:'POST',
+      body: JSON.stringify({token:crypto.createHash('sha256').update(password).digest('hex')})
+    })
 
-    setCookie('token',publicEncrypt(process.env.NEXT_PUBLIC_RSA_KEY))
+    const res=await req.json()
 
-
+    if(res.success){
+      
     Router.push('/inventory')
+    }else{
+
+    setMessage('Server Error: something Went Wrong')
+    }
+
+
 
 
     };
@@ -59,7 +70,7 @@ export default function Example() {
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label htmlFor="name" className="block text-lg font-medium leading-6 text-white">
-                Username
+                Name
               </label>
               <div className="mt-2">
                 <input

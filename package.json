@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@google-cloud/vision": "^4.3.0",
+    "@google/generative-ai": "^0.16.0",
     "@next-auth/firebase-adapter": "^2.0.1",
     "cookies-next": "^4.2.1",
     "firebase": "^10.12.5",
