@@ -49,6 +49,15 @@ function Page() {
   
   
     ])
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3; 
+  
+    
+    const totalPages = Math.ceil(inventory.length / itemsPerPage);
+    const currentItems = inventory.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
 const [count,setCount]=useState(inventory.length)
   const openModal = () => {
     if (modalRef.current) {
@@ -64,6 +73,9 @@ const [count,setCount]=useState(inventory.length)
     const regex = new RegExp(name, 'i');
     setInventory(inventory.filter(item => regex.test(item.name)));
   }
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   return (
     <div className="grid w-full overflow-y-auto h-screen pb-[8pc]" style={{height:'100vh',width:'100vw'}}>
@@ -81,14 +93,42 @@ const [count,setCount]=useState(inventory.length)
   </div>
 </div>
       <Hero open={openModal} count={count}/>
-        {inventory.length>0?inventory.map((obj)=>{
-          return <Inventory del={del} key={obj.id} id={obj.id} inventory={inventory} setInventory={setInventory} name={obj.name} quantity={obj.quantity} image={obj.image}/>
-        }): <span className="text-lg text-center mt-[50px] text-gray-400 "> No Items</span>}
+      {currentItems.length > 0 ? (
+        currentItems.map((obj) => (
+          <Inventory
+            del={del}
+            key={obj.id}
+            id={obj.id}
+            inventory={inventory}
+            setInventory={setInventory}
+            name={obj.name}
+            quantity={obj.quantity}
+            image={obj.image}
+          />
+        ))
+      ) : (
+        <span className="text-lg text-center mt-[50px] text-gray-400"> No Items</span>
+      )}
+
+      {/* Pagination Controls */}
+      <div className="flex justify-center mt-4">
+        {Array.from({ length: totalPages }, (_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageChange(index + 1)}
+            className={`px-4 py-2 mx-1 border rounded ${
+              currentPage === index + 1 ? 'bg-blue-500 text-white' : 'bg-transparent'
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
       </div>
-      <Modal inventory={inventory} setInventory={setInventory} count={setCount}  ref={modalRef} />
+      
+    </div>
+    <Modal inventory={inventory} setInventory={setInventory} count={setCount}  ref={modalRef} />
     <ScrollToTopButton/>
     </div>
   )
 }
-
 export default Page
