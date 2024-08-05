@@ -13,12 +13,15 @@
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@google-cloud/vision": "^4.3.0",
+    "@next-auth/firebase-adapter": "^2.0.1",
+    "cookies-next": "^4.2.1",
     "firebase": "^10.12.5",
     "formidable": "^3.5.1",
     "next": "14.2.5",
     "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/node": "22.1.0",

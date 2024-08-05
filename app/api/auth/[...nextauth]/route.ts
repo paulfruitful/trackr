@@ -1,33 +1,40 @@
+
 /*import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google"
-import {doc,setDoc} from "firebase/firestore"
-import { db } from "@/firebase";
-import { NextAuthConfig } from "next-auth";
-const GoogleClientId=process.env.GOOGLE_CLIENT_ID
-const GoogleSecret=process.env.GOOGLE_SECRET
+import Providers from "next-auth/providers";
+import { FirestoreAdapter } from "@next-auth/firebase-adapter";
+import { db } from "../../../../firebase"; // Adjust the path if necessary
 
-
-
-const authOption:NextAuthConfig={
-    session: {
-      strategy: "jwt", // or "database"
-    },
-    providers: [
-      GoogleProvider({
-        clientId: process.env.GOOGLE_CLIENT_ID,
-        clientSecret: process.env.GOOGLE_SECRET,
-      }),
-    ],
-    callbacks: {
-      async   signIn({ user, account, profile }) {
-        // Handle sign-in logic here
-        return true;
+export default NextAuth({
+  providers: [
+    Providers.Credentials({
+      name: 'Credentials',
+      credentials: {
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" }
       },
-      // Other callbacks as needed
-    },
-  };
-
-
-const handler=NextAuth(authOption)
-
-export {handler as GET, handler as POST}*/
+      authorize: async (credentials) => {
+        // Add your own authentication logic here
+        const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' };
+        if (user) {
+          return Promise.resolve(user);
+        } else {
+          return Promise.resolve(null);
+        }
+      }
+    })
+  ],
+  adapter: FirestoreAdapter(db),
+  session: {
+    jwt: false,
+  },
+  callbacks: {
+    async session(session, user) {
+      session.user = user;
+      return session;
+    }
+  },
+  pages: {
+    signIn: '/auth/signin',
+  },
+});
+*/
