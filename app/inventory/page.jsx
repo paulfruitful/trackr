@@ -1,5 +1,5 @@
 "use client"
-import Nav from "../../components/nav"
+import Nav from "../../components/Nav"
 import "../../fontawesome"
 import Hero from "../../components/Hero"
 import Inventory from "../../components/Inventory"
