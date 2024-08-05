@@ -46,5 +46,5 @@ const Modal = forwardRef(
   </div>
   )
 })
-
+Modal.displayName = 'Modal';
 export default Modal
