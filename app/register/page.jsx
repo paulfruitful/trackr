@@ -21,11 +21,13 @@ export default function Example() {
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-      setMessage('User Already Exists');
+      setMessage('User Already Exists Login');
       return;
     } 
     const id=v4()
     const userRef = doc(db, "users", id);
+    const inventoryRef = collection(userRef, "inventory");
+    const docRef = await addDoc(inventoryRef, {});
     await setDoc(userRef, {
       name,
       email,
@@ -46,6 +48,7 @@ export default function Example() {
 
     if(res.success){
     setCookie('jwt',res.token)
+    setCookie('email',email)
     setCookie('color',res.color)
     Router.push('/inventory')
     }else{

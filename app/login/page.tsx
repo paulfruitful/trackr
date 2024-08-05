@@ -43,6 +43,8 @@ export default function Example() {
 
     if(res.success){
     setCookie('jwt',res.token)
+    
+    setCookie('email',email)
     setCookie('color',res.color)
     Router.push('/inventory')
     }else{

@@ -1,6 +1,5 @@
 import { getCookie, getCookies } from "cookies-next"
 const Nav = () => {
-  console.log(getCookies())
   return (
   
 <div className="flex flex-row justify-between w-full h-[100px]">

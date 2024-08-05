@@ -4,9 +4,9 @@ import "../../fontawesome"
 import Hero from "../../components/Hero"
 import Inventory from "../../components/Inventory"
 import Modal from "../../components/Modal"
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ScrollToTopButton from "../../components/ScrollToTopButton"
-import{doc,setDoc,getDoc, query, where, collection, getDocs } from "firebase/firestore"
+import{doc,deleteDoc, query, where, collection, getDocs } from "firebase/firestore"
 import { db } from "../../firebase"
 import { getCookie } from "cookies-next"
 
@@ -16,36 +16,60 @@ import { getCookie } from "cookies-next"
 function Page() {
   const modalRef = useRef(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const fetchInventory=async()=>{
-    const q = query(collection(db, "users"), where("password", "==", getCookie('jwt')))
-    const users = await getDocs(q);
-    const userDocRef = users.docs[0].ref.id;
-    console.log(userDocRef)
-    const subcollectionRef = collection(db,`users/${userDocRef}/inventory`)
-    const querySnapshot = await getDocs(subcollectionRef);
-    querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-    });
-  }
   
-  fetchInventory()
-  const del = (id) => {
+const [count,setCount]=useState('...')
+  const [inventory,setInventory]=useState([ ])
+    
+  const [currentPage, setCurrentPage] = useState(1);
+const [message,updateMessage]=useState('Loading...')
+  const fetchInventory=async()=>{
+    const q = query(collection(db, "users"), where("password", "==", getCookie('jwt')),where("email","==",getCookie('email')))
+    const users = await getDocs(q);
+    const userDocRef = users.docs[0].ref.id
+    //console.log(users.docs[0].data())
+    localStorage.setItem('ref',userDocRef)
+    const invent=await getDocs(collection(db, "users", userDocRef, "inventory"))
+    const inventoryItems = [];
+    invent.forEach((i) => {
+      inventoryItems.push({
+        ref:i.ref,
+        id: i.ref.id,
+        ...i.data(),
+      });
+    });
+    setInventory(inventoryItems);
+    setCount(inventoryItems.length)
+   
+    updateMessage('No Items Found')
+  
+ 
+};
+
+
+
+  
+  
+
+  const del =async (id) => {
     const inv = inventory.filter(item => item.id !== id);
     setInventory(inv);
+    
+    const docRef =await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
+    await deleteDoc(docRef);
     setCount(count-1)
   };
 
-  const [inventory,setInventory]=useState([ ])
-    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3; 
-  
+  useEffect(
+    ()=>{
+      fetchInventory()
+    },[])
     
     const totalPages = Math.ceil(inventory.length / itemsPerPage);
     const currentItems = inventory.slice(
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
     );
-const [count,setCount]=useState(inventory.length)
   const openModal = () => {
     if (modalRef.current) {
       modalRef.current.className = "fixed z-10 overflow-y-auto top-0 w-full left-0";
@@ -84,6 +108,7 @@ const [count,setCount]=useState(inventory.length)
         currentItems.map((obj) => (
           <Inventory
             del={del}
+            ref={obj.ref}
             key={obj.id}
             id={obj.id}
             inventory={inventory}
@@ -94,7 +119,7 @@ const [count,setCount]=useState(inventory.length)
           />
         ))
       ) : (
-        <span className="text-lg text-center mt-[50px] text-gray-400"> No Items</span>
+        <span className="text-lg text-center mt-[50px] text-gray-400"> {message}</span>
       )}
 
       {/* Pagination Controls */}

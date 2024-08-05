@@ -1,21 +1,38 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-const Inventory = ({id,del,name,quantity,image,inventory,setInventory,count}) => {
- const [qty,setQty]=useState(quantity)
+import { db } from '../firebase';
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 
- const increaseQty=()=>{
+
+const Inventory = ({ref,id,del,name,quantity,image,inventory,setInventory,count}) => {
+ 
+    const [qty,setQty]=useState(quantity)
+
+ const increaseQty=async ()=>{
     setQty(qty+1)
+    const invent=await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
     
+    await updateDoc(invent, {
+        quantity: qty+1
+      });
 }
 
 
-const decreaseQt = () => {
-    if (qty <1) {
+const decreaseQt =async () => {
+    if (qty-1<1) {
       del(id)
+      return
     }
-    setQty(qty - 1);
-  };
+
+    setQty(qty - 1); 
+    const invent=await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
+    
+    await updateDoc(invent, {
+        quantity: qty+1
+      });
+ 
+};
  return(
     <div className="flex w-[350px] lg:w-[600px] shadow-lg mt-[30px] self-center  justify-between bg-[#1A1A1A] ">
         <div className="flex p-3 ">
