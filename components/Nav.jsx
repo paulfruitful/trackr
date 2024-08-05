@@ -16,7 +16,7 @@ const Nav = () => {
 
     <div className="flex p-6 justify-center items-center">
       <div className="w-[30px] h-[30px] rounded-full" style={{backgroundColor:getCookie('color')}}> </div> 
-      <span className="mx-2"></span>
+      <span className="lg:mx-2 ml-[2px]"></span>
      
       <span className="text-[16px] dark:text-white text-center text-white">{getCookie('name')}</span>
     </div>

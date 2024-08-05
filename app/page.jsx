@@ -21,10 +21,11 @@ export default function Home() {
   </div>
   <div className="p-6">
     <div className="flex text-[19px] dark:text-white">
-      <span className=" border-b-[2px] p-3 border-none hover:border-solid btn-style">Login</span>
+      <a href="/login"><span className=" border-b-[2px] p-3 border-none hover:border-solid btn-style">Login</span></a>
       <span className="mx-2"></span>
-     
-      <span className="border-b-[2px] border-none bg-green-600 text-white p-3 rounded-[10px] btn-style  hover:border-solid">Signup</span>
+     <a href="/register">
+      <span className="border-b-[2px] border-none bg-green-600 text-white active:bg-green-800 p-3 rounded-[10px] btn-style  hover:border-solid">Signup</span>
+    </a>
     </div>
   </div>
 </div>
