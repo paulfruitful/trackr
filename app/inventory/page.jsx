@@ -31,10 +31,13 @@ const [message,updateMessage]=useState('Loading...')
     const invent=await getDocs(collection(db, "users", userDocRef, "inventory"))
     const inventoryItems = [];
     invent.forEach((i) => {
+      const {name,quantity,image}=i.data()
       inventoryItems.push({
         ref:i.ref,
         id: i.ref.id,
-        ...i.data(),
+        name:name,
+        image,image,
+        quantity:quantity
       });
     });
     setInventory(inventoryItems);
@@ -52,6 +55,8 @@ const [message,updateMessage]=useState('Loading...')
 
   const del =async (id) => {
     const inv = inventory.filter(item => item.id !== id);
+    
+    console.log("From Delete ID",id)
     setInventory(inv);
     
     const docRef =await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
@@ -70,6 +75,7 @@ const [message,updateMessage]=useState('Loading...')
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
     );
+    
   const openModal = () => {
     if (modalRef.current) {
       modalRef.current.className = "fixed z-10 overflow-y-auto top-0 w-full left-0";
@@ -103,9 +109,14 @@ const [message,updateMessage]=useState('Loading...')
 
   </div>
 </div>
+{
+    console.log(inventory)}
       <Hero open={openModal} count={count}/>
       {currentItems.length > 0 ? (
-        currentItems.map((obj) => (
+        currentItems.map((obj) => {
+          
+          console.log("From Map ID",obj.id)
+          return(
           <Inventory
             del={del}
             ref={obj.ref}
@@ -116,8 +127,8 @@ const [message,updateMessage]=useState('Loading...')
             name={obj.name}
             quantity={obj.quantity}
             image={obj.image}
-          />
-        ))
+          />)
+})
       ) : (
         <span className="text-lg text-center mt-[50px] text-gray-400"> {message}</span>
       )}

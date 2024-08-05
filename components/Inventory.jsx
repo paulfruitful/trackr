@@ -10,6 +10,8 @@ const Inventory = ({ref,id,del,name,quantity,image,inventory,setInventory,count}
     const [qty,setQty]=useState(quantity)
 
  const increaseQty=async ()=>{
+    
+    console.log("From Increase ID",id)
     setQty(qty+1)
     const invent=await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
     
@@ -20,6 +22,8 @@ const Inventory = ({ref,id,del,name,quantity,image,inventory,setInventory,count}
 
 
 const decreaseQt =async () => {
+    
+    console.log("From Increase ID",id)
     if (qty-1<1) {
       del(id)
       return
