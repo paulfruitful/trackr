@@ -152,7 +152,7 @@ export default function Example() {
 
           <p className="mt-10 text-center text-sm text-gray-400">
             Already a user?{' '}
-            <a href="#" className="font-semibold leading-6 text-green-400 hover:text-green-500">
+            <a href="/login" className="font-semibold leading-6 text-green-400 hover:text-green-500">
               Login
             </a>
           </p>
