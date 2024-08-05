@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import{query, where, collection, getDocs } from "firebase/firestore"
 import { getCookie } from 'cookies-next';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClock } from '@fortawesome/free-solid-svg-icons';
 let inventory=[] 
   
     const fetchInventory=async()=>{
@@ -14,12 +15,11 @@ let inventory=[]
           const invent=await getDocs(collection(db, "users", userDocRef, "inventory"))
           
           invent.forEach((i) => {
-            const {name,quantity,image}=i.data()
-            console.log('I AM A', i.data())
+            const {name}=i.data()
             inventory.push(name);
           });
           if(inventory.length>1){
-            fetchAIResponse()
+            return fetchAIResponse()
           }
           
 };
@@ -44,9 +44,13 @@ const fetchAIResponse = async () => {
         throw new Error('Network response was not ok');
       }
   
-      const data = await response.json();
-      
-      return data.recipe;
+      const data = await response.json()
+      let recipe=data.recipe;
+
+      //recipe= jsonString.replace(/```json|```/g, '').trim();
+      return recipe
+
+
     } catch (error) {
       throw new Error('Failed to fetch AI response: ' + error.message);
     }
@@ -61,7 +65,8 @@ const AIResponse = ({inventory}) => {
     const getAIResponse = async () => {
       try {
         const aiResponse = await fetchInventory();
-        setResponse(aiResponse);
+        setResponse(JSON.parse(aiResponse));
+        console.log(JSON.parse(aiResponse))
       } catch (err) {
         setError("Failed to fetch AI response.");
       } finally {
@@ -85,7 +90,17 @@ const AIResponse = ({inventory}) => {
       )}
       
       {response && (
-        <p className="text-lg text-gray-700">{response}</p>
+        <p className="text-lg text-gray-700 flex flex-col">
+           <span className="font-bold m-2"> {response.title}</span>
+           <span className='flex  text-md'><FontAwesomeIcon className='text-black p-2' icon={faClock}/> <span className='font-bold'>Duration:</span> <span className="text-md px-2">{response.duration}</span></span>
+           <span className='flex  ml-2 text-md'> <span className='font-bold'>Ingredients:</span> <span className="text-md px-2">{response.ingredients}</span></span>
+           <span className="w-full p-2 font-bold text-md">
+            {response.recipe}
+           </span>
+
+            
+            
+        </p>
       )}
     </div>
   );

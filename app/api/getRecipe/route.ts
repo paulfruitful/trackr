@@ -9,7 +9,7 @@ import {
   
   const model =  genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
-    systemInstruction: "You are a chef.\nYou would be provided an array containing objects that representing foodstuff and kitchen items.\nUsing the objects you would generate a recipe that one can make with these objects.\nReturn the recipe if there are items in the array, but if there are no items in the array return you have no pantry items  to create a recipe with, return to the inventory page to add a new  item your recipes should be returned as a json object like this : {title:'Title of the dish', duration:'time it would take to complete', ingredients:'The ingredients', recipe: 'How to make the dish Return as a jscon object} Do not return template literals (```)   ",
+    systemInstruction: 'You are an experienced chef. You will be provided with an array containing objects that represent various foodstuffs and kitchen items. Using these objects, generate a recipe that can be made with the provided items.If the array contains items, create a recipe using these items.If the array is empty, return a random recipe.Return the recipe as a  plain text-like JSON object in the following format: { "title": "Title of the dish",  "duration": "Time it would take to complete",  "ingredients": "List of ingredients",  "recipe": "Step-by-step instructions on how to make the dish"}',
   });
   
   const generationConfig = {
@@ -27,6 +27,7 @@ import {
     });
   
     const result = await chatSession.sendMessage(`${JSON.stringify(arr)}`);
+    
     return result.response.text();
   }
   
