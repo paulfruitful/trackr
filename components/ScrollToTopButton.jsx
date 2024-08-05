@@ -28,13 +28,14 @@ const ScrollToTopButton = ({ onLogout }) => {
 
   return (
     <div className="fixed bottom-4 right-4 flex lg:mr-3 ml-5 flex-col space-y-2">
-         <button
+         <a
+             href='/recipes'
             aria-details='Generate AI Recipe'
             className="bg-black opacity-90 text-white p-3 hover:text-gray-400 active:text-gray-400  lg:opacity-100 lg:p-6 text-xl lg:text-4xl rounded-full shadow-md hover:bg-black focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-70"
           >
             <FontAwesomeIcon icon={faCommentDots}/>
 
-          </button>
+          </a>
 
           <button onClick={handleLogout}
             aria-details='Generate AI Recipe'

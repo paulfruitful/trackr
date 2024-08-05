@@ -42,6 +42,7 @@ const [message,updateMessage]=useState('Loading...')
     });
     setInventory(inventoryItems);
     setCount(inventoryItems.length)
+    localStorage.setItem('count',inventoryItems.length)
    
     updateMessage('No Items Found')
   
@@ -61,7 +62,10 @@ const [message,updateMessage]=useState('Loading...')
     
     const docRef =await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
     await deleteDoc(docRef);
+    
+    localStorage.setItem('count',count-1)
     setCount(count-1)
+    
   };
 
     const itemsPerPage = 3; 

@@ -30,6 +30,9 @@ const Modal = forwardRef(
         const newLength=inventory.length+1
         setInventory([...inventory,p])
         count(newLength)
+        
+    localStorage.setItem('count',newLength)
+
         closeModal()
       }
     
