@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {v4} from "uuid"
 import { db } from '../../firebase';
-import{doc,setDoc, query, collection, where,getDocs} from "firebase/firestore"
+import{doc,setDoc, query, collection, where,getDocs, addDoc} from "firebase/firestore"
 import crypto from 'crypto'
 import { setCookie } from 'cookies-next';
 
@@ -32,6 +32,10 @@ export default function Example() {
       password:crypto.createHash('sha256').update(password).digest('hex'),
       createdAt: new Date().toISOString(),
     });
+    
+    
+    const userPreferencesRef = collection(userRef, 'inventory');
+    await addDoc(userPreferencesRef, {    });
     setCookie('name',name)
     const req=await fetch('api/reg',{
       method:'POST',

@@ -11,7 +11,7 @@ const Nav = () => {
   <line x1="12" y1="12" x2="18" y2="12" stroke="currentColor" stroke-width="2"/>
   </svg>
 
-   <a href="/dashboard" className='ml-2 text-4xl lg:text-[27px]'> Trackr</a>
+   <a href="#" className='ml-2 text-4xl lg:text-[27px]'> Trackr</a>
   </div>
 
     <div className="flex p-6 justify-center items-center">

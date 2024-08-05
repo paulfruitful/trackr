@@ -36,7 +36,7 @@ export default function Home() {
     <div className="flex flex-col overflow-hidden self-center justify-center lg:h-[90%] h-[70%]">
     <h1 class='text-center lg:text-[53px] text-3xl p-3 font-bold'>Organize Your Pantry, Save Money, Reduce Waste</h1>
     <p className='p-3 text-center text-[18px] lg:text-[23px] my-3'>Discover the easiest way to manage your pantry and never run out of your favorite foods again.</p>
-    <a href='/register' class="bg-green-600 btn hover:bg-white hover:text-black self-center text-white rounded-lg p-3 text-md w-[180px] text-center font-bold h-[50px] ">Start Now</a>
+    <a href='/inventory' class="bg-green-600 btn hover:bg-white hover:text-black self-center text-white rounded-lg p-3 text-md w-[180px] text-center font-bold h-[50px] ">Start Now</a>
  </div>
   </div>
 </section>

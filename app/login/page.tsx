@@ -148,9 +148,9 @@ export default function Example() {
           {message && <p className="mt-4 text-center text-sm text-gray-400">{message}</p>}
 
           <p className="mt-10 text-center text-sm text-gray-400">
-            Already a user?{' '}
+            Don't Have An Account?{' '}
             <a href="/register" className="font-semibold leading-6 text-green-400 hover:text-green-500">
-              Login
+              Register
             </a>
           </p>
         </div>
