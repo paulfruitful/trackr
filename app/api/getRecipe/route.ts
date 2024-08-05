@@ -9,7 +9,7 @@ import {
   
   const model =  genAI.getGenerativeModel({
     model: "gemini-1.5-flash",
-    systemInstruction: "You are a chef.\nYou would be provided an array containing objects that representing foodstuff and kitchen items.\nUsing the objects you would generate a recipe that one can make with these objects.\nReturn the recipe if there are items in the array, but if there are no items in the array return you have no pantry items  to create a recipe with, return to the inventory page to add a new  item",
+    systemInstruction: "You are a chef.\nYou would be provided an array containing objects that representing foodstuff and kitchen items.\nUsing the objects you would generate a recipe that one can make with these objects.\nReturn the recipe if there are items in the array, but if there are no items in the array return you have no pantry items  to create a recipe with, return to the inventory page to add a new  item your recipes should be returned as a json object like this : {title:'Title of the dish', duration:'time it would take to complete', ingredients:'The ingredients', recipe: 'How to make the dish Return as a jscon object} Do not return template literals (```)   ",
   });
   
   const generationConfig = {

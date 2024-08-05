@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
+import { db } from '../firebase';
 import{query, where, collection, getDocs } from "firebase/firestore"
-const fetchAIResponse = async () => {
-   
-    let inventory=[] 
+import { getCookie } from 'cookies-next';
+
+let inventory=[] 
   
     const fetchInventory=async()=>{
         
@@ -16,21 +16,22 @@ const fetchAIResponse = async () => {
           invent.forEach((i) => {
             const {name,quantity,image}=i.data()
             console.log('I AM A', i.data())
-            inventory.push({
-              ref:i.ref,
-              id: i.ref.id,
-              name:name,
-              image,image,
-              quantity:quantity
-            });
+            inventory.push(name);
           });
+          if(inventory.length>1){
+            fetchAIResponse()
+          }
           
-          
-          localStorage.setItem('count',inventoryItems.length)
-       
-      };
-    fetchInventory()
+};
+
+
+
+const fetchAIResponse = async () => {
+   
+    
+    
     try {
+      console.log("The inventory req",inventory)
       const response = await fetch('/api/getRecipe', {
         method: 'POST',
         headers: {
@@ -44,6 +45,7 @@ const fetchAIResponse = async () => {
       }
   
       const data = await response.json();
+      
       return data.recipe;
     } catch (error) {
       throw new Error('Failed to fetch AI response: ' + error.message);
@@ -58,7 +60,7 @@ const AIResponse = ({inventory}) => {
   useEffect(() => {
     const getAIResponse = async () => {
       try {
-        const aiResponse = await fetchAIResponse(inventory);
+        const aiResponse = await fetchInventory();
         setResponse(aiResponse);
       } catch (err) {
         setError("Failed to fetch AI response.");
