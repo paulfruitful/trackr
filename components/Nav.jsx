@@ -1,7 +1,8 @@
-
+import { getCookie, getCookies } from "cookies-next"
 const Nav = () => {
+  console.log(getCookies())
   return (
-    
+  
 <div className="flex flex-row justify-between w-full h-[100px]">
   <div className="relative flex  p-6 font-bold  text-white">
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,11 +14,11 @@ const Nav = () => {
    <a href="/dashboard" className='ml-2 text-4xl lg:text-[27px]'> Trackr</a>
   </div>
 
-    <div className="flex p-6 justify-center">
-      <img src="https://placehold.co/600x400/000000/FFFFFF/png" className="w-[50px] h-[50px] rounded-full"/> 
+    <div className="flex p-6 justify-center items-center">
+      <div className="w-[30px] h-[30px] rounded-full" style={{backgroundColor:getCookie('color')}}> </div> 
       <span className="mx-2"></span>
      
-      <span className="text-[16px] dark:text-white text-white">User</span>
+      <span className="text-[16px] dark:text-white text-center text-white">{getCookie('name')}</span>
     </div>
 
 </div>

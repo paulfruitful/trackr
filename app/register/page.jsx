@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {v4} from "uuid"
 import { db } from '../../firebase';
-import{doc,setDoc} from "firebase/firestore"
+import{doc,setDoc, query, collection, where,getDocs} from "firebase/firestore"
 import crypto from 'crypto'
+import { setCookie } from 'cookies-next';
 
 
 export default function Example() {
@@ -16,6 +17,13 @@ export default function Example() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const q = query(collection(db, "users"), where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      setMessage('User Already Exists');
+      return;
+    } 
     const id=v4()
     const userRef = doc(db, "users", id);
     await setDoc(userRef, {
@@ -24,18 +32,20 @@ export default function Example() {
       password:crypto.createHash('sha256').update(password).digest('hex'),
       createdAt: new Date().toISOString(),
     });
-    
+    setCookie('name',name)
     const req=await fetch('api/reg',{
       method:'POST',
-      body: JSON.stringify({token:crypto.createHash('sha256').update(password).digest('hex')})
+      body: JSON.stringify({token:crypto.createHash('sha256').update(password).digest('hex'),name:name})
     })
 
     const res=await req.json()
 
     if(res.success){
-      
+    setCookie('jwt',res.token)
+    setCookie('color',res.color)
     Router.push('/inventory')
     }else{
+
 
     setMessage('Server Error: something Went Wrong')
     }
