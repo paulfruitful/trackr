@@ -27,7 +27,9 @@ const [message,updateMessage]=useState('Loading...')
     const users = await getDocs(q);
     const userDocRef = users.docs[0].ref.id
     //console.log(users.docs[0].data())
+    if (typeof window !== "undefined") {
     localStorage.setItem('ref',userDocRef)
+  }
     const invent=await getDocs(collection(db, "users", userDocRef, "inventory"))
     const inventoryItems = [];
     invent.forEach((i) => {
@@ -42,7 +44,9 @@ const [message,updateMessage]=useState('Loading...')
     });
     setInventory(inventoryItems);
     setCount(inventoryItems.length)
+    if (typeof window !== "undefined") {
     localStorage.setItem('count',inventoryItems.length)
+  }
    
     updateMessage('No Items Found')
   
@@ -59,13 +63,13 @@ const [message,updateMessage]=useState('Loading...')
     
    // console.log("From Delete ID",id)
     setInventory(inv);
-    
+    if (typeof window !== "undefined") {
     const docRef =await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
     await deleteDoc(docRef);
     
     localStorage.setItem('count',count-1)
     setCount(count-1)
-    
+    }
   };
 
     const itemsPerPage = 3; 
