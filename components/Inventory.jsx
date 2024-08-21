@@ -11,10 +11,11 @@ const Inventory = ({ref,id,del,name,quantity,image,inventory,setInventory,count}
 
  const increaseQty=async ()=>{
     
-    console.log("From Increase ID",id)
+  //  console.log("From Increase ID",id)
     setQty(qty+1)
+    if (typeof window !== "undefined") {
     const invent=await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
-    
+    }
     await updateDoc(invent, {
         quantity: qty+1
       });
@@ -23,15 +24,16 @@ const Inventory = ({ref,id,del,name,quantity,image,inventory,setInventory,count}
 
 const decreaseQt =async () => {
     
-    console.log("From Increase ID",id)
+   // console.log("From Increase ID",id)
     if (qty-1<1) {
       del(id)
       return
     }
 
     setQty(qty - 1); 
+    if (typeof window !== "undefined") {
     const invent=await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
-    
+    }
     await updateDoc(invent, {
         quantity: qty+1
       });

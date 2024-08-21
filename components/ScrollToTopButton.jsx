@@ -2,29 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
+
+import { logout } from '../lib/logout';
 const ScrollToTopButton = ({ onLogout }) => {
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
 
-  const handleLogout = async () => {
-    try {
-      const response = await fetch('/api/logout', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (response.ok) {
-        // Redirect to login page after successful logout
+  const handleLogout =() => {
+        logout()
         router.push('/login');
-      } else {
-        console.error('Failed to logout');
-      }
-    } catch (error) {
-      console.error('An error occurred during logout:', error);
-    }
-  };
+     };
 
   return (
     <div className="fixed bottom-4 right-4 flex lg:mr-3 ml-5 flex-col space-y-2">

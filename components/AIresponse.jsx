@@ -11,7 +11,9 @@ let inventory=[]
           const q = query(collection(db, "users"), where("password", "==", getCookie('jwt')),where("email","==",getCookie('email')))
           const users = await getDocs(q);
           const userDocRef = users.docs[0].ref.id
+          if (typeof window !== "undefined") {
           localStorage.setItem('ref',userDocRef)
+        }
           const invent=await getDocs(collection(db, "users", userDocRef, "inventory"))
           
           invent.forEach((i) => {

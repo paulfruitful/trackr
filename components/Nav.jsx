@@ -1,3 +1,4 @@
+"use client"
 import { getCookie, getCookies } from "cookies-next"
 const Nav = () => {
   return (

@@ -57,7 +57,7 @@ const [message,updateMessage]=useState('Loading...')
   const del =async (id) => {
     const inv = inventory.filter(item => item.id !== id);
     
-    console.log("From Delete ID",id)
+   // console.log("From Delete ID",id)
     setInventory(inv);
     
     const docRef =await doc(db,'users',localStorage.getItem('ref'),'inventory',id)
@@ -85,12 +85,12 @@ const [message,updateMessage]=useState('Loading...')
       modalRef.current.className = "fixed z-10 overflow-y-auto top-0 w-full left-0";
     }
     setIsModalOpen(true);
-    console.log('You clicked')
+    //console.log('You clicked')
   };
 
   const search=(e)=>{
     const name=e.target.value
-    console.log(name)
+    //console.log(name)
     const regex = new RegExp(name, 'i');
     setInventory(inventory.filter(item => regex.test(item.name)));
   }
@@ -113,13 +113,11 @@ const [message,updateMessage]=useState('Loading...')
 
   </div>
 </div>
-{
-    console.log(inventory)}
       <Hero open={openModal} count={count}/>
       {currentItems.length > 0 ? (
         currentItems.map((obj) => {
           
-          console.log("From Map ID",obj.id)
+        //  console.log("From Map ID",obj.id)
           return(
           <Inventory
             del={del}
