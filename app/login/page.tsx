@@ -1,12 +1,15 @@
 "use client"
 import { useState } from 'react';
+import '../globals.css'
 import { useRouter } from 'next/navigation';
 import {v4} from "uuid"
 import { db } from '../../firebase';
 import{doc,setDoc,getDoc, query, where, collection, getDocs } from "firebase/firestore"
 import crypto from 'crypto'
 import { setCookie } from 'cookies-next';
+import { toast, ToastContainer } from 'react-toastify';
 
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Example() {
   const [email, setEmail] = useState('');
@@ -23,7 +26,11 @@ export default function Example() {
       const querySnapshot = await getDocs(q);
   
       if (querySnapshot.empty) {
-        setMessage('User Not Found');
+        toast.error('User Not Found',
+        {
+          position:'top-center'
+        }
+        );
         
         return;
       }  
@@ -40,8 +47,11 @@ export default function Example() {
     })
 
     const res=await req.json()
+    const id=toast.loading('Logging in... ')
 
     if(res.success){
+    toast.dismiss(id)
+    toast.success('Login Successful')
     setCookie('jwt',res.token)
     
     setCookie('email',email)
@@ -55,7 +65,7 @@ export default function Example() {
 
 
       } else {
-        setMessage('Invalid credentials');
+        toast.error('Invalid credentials');
        
       }
     } catch (error) {
@@ -157,6 +167,7 @@ export default function Example() {
             </a>
           </p>
         </div>
+      <ToastContainer/>
       </div>
     </>
   );

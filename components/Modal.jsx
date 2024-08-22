@@ -8,9 +8,9 @@ const Modal = forwardRef(
     const [name,setName]=useState('')
     const [qty,setQty]=useState(0)
     const [image,setImage]=useState(['https://plus.unsplash.com/premium_photo-1664527308003-82ef756f40e5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aG91c2Vob2xkJTIwaXRlbXN8ZW58MHx8MHx8fDA%3D','https://images.unsplash.com/photo-1716203045308-e497c8337b96?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aG91c2Vob2xkJTIwaXRlbXN8ZW58MHx8MHx8fDA%3D','https://images.unsplash.com/photo-1719427129634-c1794a1ebbd4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8Zm9vZCUyMGl0ZW1zfGVufDB8fDB8fHww'])
-    if (typeof window !== "undefined") {
-    const inventoryRef=collection(db, "users", localStorage.getItem('ref'), "inventory")
-    }
+    const reffer = typeof window !== "undefined" ? localStorage.getItem('ref') : null;
+    const inventoryRef = collection(db, "users", reffer, "inventory");
+    
     const closeModal=()=>{
         if (ref.current) {
         ref.current.className = "fixed z-10 overflow-y-auto top-0 w-full left-0 hidden";

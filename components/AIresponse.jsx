@@ -68,9 +68,8 @@ const AIResponse = ({inventory}) => {
       try {
         const aiResponse = await fetchInventory();
         setResponse(JSON.parse(aiResponse));
-        console.log(JSON.parse(aiResponse))
       } catch (err) {
-        setError("Failed to fetch AI response.");
+        setError(`Loading... `);
       } finally {
         setLoading(false);
       }

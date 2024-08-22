@@ -1,33 +1,39 @@
 "use client"
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import {ToastContainer, toast} from 'react-toastify'
 import {v4} from "uuid"
+import '../globals.css'
 import { db } from '../../firebase';
 import{doc,setDoc, query, collection, where,getDocs, addDoc} from "firebase/firestore"
 import crypto from 'crypto'
 import { setCookie } from 'cookies-next';
 
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Example() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [message,setMessage]=useState('')
+ // const [message,setMessage]=useState('')
   const Router=useRouter()
 
   const handleSubmit = async (e) => {
+    const tost=toast.loading('Creating Account....')
     e.preventDefault();
     const q = query(collection(db, "users"), where("email", "==", email));
     const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
-      setMessage('User Already Exists Login');
+      toast.dismiss(tost)
+  
+      toast.error('User Already Exists Login');
       return;
     } 
     const id=v4()
     const userRef = doc(db, "users", id);
-    const inventoryRef = collection(userRef, "inventory");
-    const docRef = await addDoc(inventoryRef, {});
+   // const inventoryRef = collection(userRef, "inventory");
+    //const docRef = await addDoc(inventoryRef, {});
     await setDoc(userRef, {
       name,
       email,
@@ -37,7 +43,7 @@ export default function Example() {
     
     
     const userPreferencesRef = collection(userRef, 'inventory');
-    await addDoc(userPreferencesRef, {    });
+    //await addDoc(userPreferencesRef, {});
     setCookie('name',name)
     const req=await fetch('api/reg',{
       method:'POST',
@@ -47,14 +53,15 @@ export default function Example() {
     const res=await req.json()
 
     if(res.success){
+    toast.dismiss(tost)
+    toast.success('Account Created Successfully')
     setCookie('jwt',res.token)
     setCookie('email',email)
     setCookie('color',res.color)
     Router.push('/inventory')
     }else{
-
-
-    setMessage('Server Error: something Went Wrong')
+      toast.dismiss(tost)
+    toast.error('Server Error: something Went Wrong')
     }
 
 
@@ -155,8 +162,7 @@ export default function Example() {
             </div>
           </form>
 
-          {message && <p className="mt-4 text-center text-sm text-gray-400">{message}</p>}
-
+          
           <p className="mt-10 text-center text-sm text-gray-400">
             Already a user?{' '}
             <a href="/login" className="font-semibold leading-6 text-green-400 hover:text-green-500">
@@ -165,6 +171,7 @@ export default function Example() {
           </p>
         </div>
       </div>
+      <ToastContainer/>
     </>
   );
 }
